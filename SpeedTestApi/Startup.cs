@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SpeedTestApi.Services;
 
 namespace SpeedTestApi
 {
@@ -21,11 +22,18 @@ namespace SpeedTestApi
         }
 
         public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+        
+// This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            var connectionString = Configuration.GetValue<string>("EventHub:ConnectionString");
+            var entityPath = Configuration.GetValue<string>("EventHub:EntityPath");
+            services.AddScoped<ISpeedTestEvents, SpeedTestEvents>(cts =>
+            {
+                return new SpeedTestEvents(connectionString, entityPath);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
