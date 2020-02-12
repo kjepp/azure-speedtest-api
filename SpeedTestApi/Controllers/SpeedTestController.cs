@@ -39,6 +39,5 @@ namespace SpeedTestApi.Controllers
 
             return response;
         }
-
     }
 }
