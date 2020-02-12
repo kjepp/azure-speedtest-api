@@ -33,11 +33,11 @@ namespace SpeedTestApi
         {
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
-            } else {
+            } 
+            else
+            {
                 app.UseHttpsRedirection();
             }
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 
